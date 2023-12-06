@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,4 +19,8 @@ use App\Http\Controllers\UserController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/register', [ UserController::class,'register']);
+// Route::post('/register', [ UserController::class,'create']);
+// Route::get('/getuser', [ UserController::class,'index']);
+Route::resource('users',UserController::class);
+Route::post('addproduct',[ProductController::class, 'addProduct']);
+Route::get('getproducts',[ProductController::class, 'getProducts']);

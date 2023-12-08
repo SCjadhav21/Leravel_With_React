@@ -14,7 +14,7 @@ class ProductController extends Controller
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
-        $product->file_path = $request->file('file')->store('products');
+        $product->file_path = $request->file('file_path')->store('products');
         $product->save();
     
         return response()->json(['product' => $product, 'message' => 'Product created successfully']);

@@ -1,9 +1,23 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 export default function Dashboard({ auth }) {
     const [data, setData] = useState([]);
+    const [refresh, setRefresh] = useState(false);
+    const handelDelete = async (id) => {
+        let responce = confirm("Are you sure you want to delete" + id);
+        if (responce) {
+            let res = await fetch(`http://127.0.0.1:8000/api/delete/${id}`, {
+                method: "DELETE",
+            });
+            res = await res.json();
+
+            alert(res);
+            setRefresh(!refresh);
+        }
+    };
+
     useEffect(() => {
         async function fetchData() {
             let res = await fetch("http://127.0.0.1:8000/api/getproducts");
@@ -11,7 +25,7 @@ export default function Dashboard({ auth }) {
             setData(res);
         }
         fetchData();
-    }, []);
+    }, [refresh]);
 
     return (
         <AuthenticatedLayout
@@ -35,6 +49,7 @@ export default function Dashboard({ auth }) {
                                     <th>Product Image</th>
                                     <th>Product Price(in Rs.)</th>
                                     <th>Product description</th>
+                                    <th>Delete Product</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,6 +68,16 @@ export default function Dashboard({ auth }) {
                                             </td>
                                             <td>{item.price}</td>
                                             <td>{item.description}</td>
+                                            <td>
+                                                <Button
+                                                    variant="success"
+                                                    onClick={() =>
+                                                        handelDelete(item.id)
+                                                    }
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </td>
                                         </tr>
                                     );
                                 })}

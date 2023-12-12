@@ -36,7 +36,7 @@ class ProductController extends Controller
             }
          }
          // upadate product controller method
-         public function updateProduct ($id, Request $request){
+         public function updateProduct ( Request $request,$id){
             $product = Product::find($id);
             if(!$product){
                 return "Product not found with id " . $id;
@@ -52,7 +52,7 @@ class ProductController extends Controller
 
             }
             $product->save();
-            return response()->json(['product' => $product, 'message' => 'Product updated successfully']);
-           
+            return 'Product updated successfully';
+            // return $request->input();
          }
 }

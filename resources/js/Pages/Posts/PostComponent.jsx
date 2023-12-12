@@ -52,7 +52,7 @@ const PostComponent = ({ auth }) => {
         >
             <div>
                 <form onSubmit={handelSubmit} className="col-sm-6 offset-sm-3">
-                    <h2 className="col-sm-6 offset-sm-3">Add Product</h2>
+                    <h2 className="col-sm-6 offset-sm-3">Product Details</h2>
                     <Form.Label>Product name</Form.Label>
                     <Form.Control
                         onChange={handelChange}

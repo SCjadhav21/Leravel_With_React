@@ -1,9 +1,13 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import ProductModal from "@/Components/ProductModal";
 import { Head } from "@inertiajs/react";
+
 import { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 export default function Dashboard({ auth }) {
     const [data, setData] = useState([]);
+    const [product, setProduct] = useState({});
+    const [show, setShow] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const handelDelete = async (id) => {
         let responce = confirm("Are you sure you want to delete" + id);
@@ -49,6 +53,7 @@ export default function Dashboard({ auth }) {
                                     <th>Product Image</th>
                                     <th>Product Price(in Rs.)</th>
                                     <th>Product description</th>
+                                    <th>Edit Product</th>
                                     <th>Delete Product</th>
                                 </tr>
                             </thead>
@@ -70,6 +75,18 @@ export default function Dashboard({ auth }) {
                                             <td>{item.description}</td>
                                             <td>
                                                 <Button
+                                                    variant="danger"
+                                                    color="danger"
+                                                    onClick={() => {
+                                                        setProduct(item);
+                                                        setShow(true);
+                                                    }}
+                                                >
+                                                    Edit
+                                                </Button>
+                                            </td>
+                                            <td>
+                                                <Button
                                                     variant="success"
                                                     onClick={() =>
                                                         handelDelete(item.id)
@@ -83,6 +100,15 @@ export default function Dashboard({ auth }) {
                                 })}
                             </tbody>
                         </Table>
+                        {show && (
+                            <ProductModal
+                                singleProduct={product}
+                                refresh={refresh}
+                                setRefresh={setRefresh}
+                                show={show}
+                                setShow={setShow}
+                            />
+                        )}
                     </div>
                 </div>
             </div>
